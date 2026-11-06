@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>استشارات للنساء</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Amiri:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --plum:#4a2545; --plum-2:#6b3a63; --rose:#c9748f; --rose-soft:#f6e3e8;
+    --cream:#fdf8f4; --sand:#f3ebe3; --ink:#2b1f29; --muted:#76687a;
+    --line:#e8dcd8; --ok:#3f7d5c; --warn:#a2453f; --radius:18px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Tajawal",system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.8;font-size:17px}
+  a{color:var(--plum-2)}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+  button,input,select,textarea{font:inherit}
+
+  /* header */
+  header.top{position:sticky;top:0;z-index:20;background:rgba(253,248,244,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:16px}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--plum);font-weight:800;font-size:1.25rem}
+  .brand svg{flex:none}
+  .nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
+  .nav ul a{text-decoration:none;color:var(--ink);font-weight:500}
+  .nav ul a:hover{color:var(--rose)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:12px 26px;font-weight:700;cursor:pointer;text-decoration:none;transition:transform .15s,background .15s}
+  .btn:active{transform:scale(.98)}
+  .btn-primary{background:var(--plum);color:#fff}
+  .btn-primary:hover{background:var(--plum-2)}
+  .btn-ghost{background:transparent;color:var(--plum);border:1.5px solid var(--plum)}
+  .btn-ghost:hover{background:var(--rose-soft)}
+  .btn[disabled]{opacity:.55;cursor:not-allowed}
+  @media(max-width:860px){.nav ul{display:none}}
+
+  /* hero */
+  .hero{padding:80px 0 70px;position:relative;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}
+  .eyebrow{display:inline-block;background:var(--rose-soft);color:var(--plum);padding:6px 16px;border-radius:999px;font-weight:700;font-size:.9rem}
+  .hero h1{font-family:"Amiri",serif;font-size:clamp(2.6rem,6vw,4.2rem);line-height:1.25;margin:18px 0 14px;color:var(--plum)}
+  .hero p.lead{font-size:1.2rem;color:var(--muted);max-width:560px;margin:0 0 30px}
+  .hero .actions{display:flex;gap:14px;flex-wrap:wrap}
+  .pills{display:flex;gap:18px;flex-wrap:wrap;margin-top:34px;color:var(--muted);font-size:.95rem}
+  .pills span{display:flex;align-items:center;gap:7px}
+  .pills i{width:9px;height:9px;border-radius:50%;background:var(--rose);display:inline-block}
+  .hero-art{position:relative;aspect-ratio:1;max-width:420px;justify-self:center;width:100%}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr}.hero-art{max-width:300px}}
+
+  section{padding:80px 0}
+  .sec-head{text-align:center;max-width:640px;margin:0 auto 46px}
+  .sec-head h2{font-size:clamp(1.8rem,3.5vw,2.4rem);color:var(--plum);margin:0 0 10px;font-weight:800}
+  .sec-head p{color:var(--muted);margin:0}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .step{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px 26px}
+  .step .num{width:46px;height:46px;border-radius:14px;background:var(--plum);color:#fff;display:grid;place-items:center;font-weight:800;font-size:1.2rem;margin-bottom:16px}
+  .step h3{margin:0 0 6px;color:var(--plum)}
+  .step p{margin:0;color:var(--muted)}
+  @media(max-width:860px){.steps{grid-template-columns:1fr}}
+
+  /* categories */
+  .bg-sand{background:var(--sand)}
+  .cats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .cat{background:#fff;border-radius:var(--radius);padding:26px;border:1px solid var(--line);cursor:pointer;text-align:right;transition:border-color .15s,transform .15s}
+  .cat:hover{border-color:var(--rose);transform:translateY(-2px)}
+  .cat .ic{width:52px;height:52px;border-radius:16px;background:var(--rose-soft);display:grid;place-items:center;margin-bottom:14px}
+  .cat h3{margin:0 0 4px;color:var(--plum);font-size:1.15rem}
+  .cat p{margin:0;color:var(--muted);font-size:.95rem}
+  @media(max-width:860px){.cats{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.cats{grid-template-columns:1fr}}
+
+  /* ask form */
+  .ask-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:40px;align-items:start}
+  .assure{background:var(--plum);color:#fff;border-radius:var(--radius);padding:34px}
+  .assure h3{margin:0 0 16px;font-size:1.4rem}
+  .assure ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+  .assure li{display:flex;gap:12px;align-items:flex-start}
+  .assure li svg{flex:none;margin-top:5px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:32px}
+  label.f{display:block;font-weight:700;margin:0 0 6px;color:var(--plum)}
+  .hint{font-size:.88rem;color:var(--muted);font-weight:400}
+  .field{margin-bottom:20px}
+  select,textarea,input[type=text]{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--cream);color:var(--ink);outline:none}
+  select:focus,textarea:focus,input[type=text]:focus{border-color:var(--rose);background:#fff}
+  textarea{min-height:170px;resize:vertical}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.ask-grid{grid-template-columns:1fr}.row2{grid-template-columns:1fr}}
+  .counter{font-size:.85rem;color:var(--muted);text-align:left;margin-top:4px}
+  .check{display:flex;gap:10px;align-items:flex-start;font-size:.95rem;color:var(--muted);margin-bottom:22px}
+  .check input{margin-top:7px;accent-color:var(--plum)}
+  .msg{border-radius:12px;padding:14px 16px;margin-top:16px;display:none}
+  .msg.show{display:block}
+  .msg.err{background:#fbe9e7;color:var(--warn)}
+  .msg.info{background:var(--rose-soft);color:var(--plum)}
+  .success{text-align:center;padding:10px 0}
+  .code-box{display:inline-flex;align-items:center;gap:12px;background:var(--rose-soft);border:2px dashed var(--rose);border-radius:14px;padding:12px 20px;margin:14px 0;font-size:1.6rem;font-weight:800;letter-spacing:3px;color:var(--plum);direction:ltr}
+  .copy-btn{font-size:.9rem;padding:6px 14px;letter-spacing:0}
+
+  /* track */
+  .track{max-width:640px;margin:0 auto}
+  .track form{display:flex;gap:12px}
+  .track input{direction:ltr;text-align:center;letter-spacing:3px;font-weight:700;text-transform:uppercase}
+  @media(max-width:520px){.track form{flex-direction:column}}
+  .result{margin-top:22px}
+
+  /* Q&A */
+  .filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:30px}
+  .chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 18px;cursor:pointer;color:var(--ink)}
+  .chip.on{background:var(--plum);color:#fff;border-color:var(--plum)}
+  .qa-list{display:grid;gap:16px;max-width:860px;margin:0 auto}
+  .qa{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px}
+  .qa .meta{display:flex;gap:10px;align-items:center;font-size:.85rem;color:var(--muted);margin-bottom:8px;flex-wrap:wrap}
+  .tag{background:var(--rose-soft);color:var(--plum);padding:2px 12px;border-radius:999px;font-weight:700}
+  .qa .q{font-weight:700;margin:0 0 12px;white-space:pre-wrap}
+  .qa .a{border-right:3px solid var(--rose);padding-right:16px;color:var(--ink);white-space:pre-wrap;margin:0}
+  .qa .a-label{font-size:.85rem;font-weight:700;color:var(--rose);margin-bottom:4px}
+  .empty{text-align:center;color:var(--muted);padding:30px;background:#fff;border:1px dashed var(--line);border-radius:var(--radius)}
+
+  /* experts */
+  .exp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .exp{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;text-align:center}
+  .exp .ic{width:64px;height:64px;border-radius:50%;background:var(--rose-soft);display:grid;place-items:center;margin:0 auto 12px}
+  .exp h3{margin:0 0 4px;color:var(--plum);font-size:1.05rem}
+  .exp p{margin:0;color:var(--muted);font-size:.92rem}
+  @media(max-width:860px){.exp-grid{grid-template-columns:1fr 1fr}}
+
+  /* faq */
+  .faq{max-width:780px;margin:0 auto;display:grid;gap:12px}
+  details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 22px}
+  summary{cursor:pointer;font-weight:700;color:var(--plum);list-style:none;display:flex;justify-content:space-between;gap:10px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-size:1.4rem;line-height:1;color:var(--rose)}
+  details[open] summary::after{content:"–"}
+  details p{margin:10px 0 0;color:var(--muted)}
+
+  /* emergency */
+  .sos{background:#fff4f2;border:1.5px solid #efc4bd;border-radius:var(--radius);padding:24px 28px;display:flex;gap:18px;align-items:flex-start;max-width:860px;margin:0 auto}
+  .sos h3{margin:0 0 4px;color:var(--warn)}
+  .sos p{margin:0;color:#5d3a37}
+
+  /* expert panel */
+  #expert{display:none;background:#efe6ee}
+  #expert.show{display:block}
+  .panel-q{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:16px}
+  .panel-q textarea{min-height:120px;margin:10px 0}
+  .panel-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .status{font-size:.8rem;padding:2px 10px;border-radius:999px;font-weight:700}
+  .status.new{background:#fff1d6;color:#8a5a00}
+  .status.done{background:#e1f1e8;color:var(--ok)}
+  .tabs{display:flex;gap:10px;margin-bottom:20px}
+
+  footer{background:var(--plum);color:#e9d9e5;padding:46px 0 30px;font-size:.95rem}
+  footer .fgrid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+  footer .brand{color:#fff}
+  footer a{color:#fff}
+  footer small{display:block;margin-top:26px;color:#c8b3c3;border-top:1px solid rgba(255,255,255,.15);padding-top:18px}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap nav">
+    <a class="brand" href="#">
+      <svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#4a2545"/><path d="M20 29c-6-4-10-7.5-10-12a5 5 0 0 1 10-1.5A5 5 0 0 1 30 17c0 4.5-4 8-10 12z" fill="#f6e3e8"/></svg>
+      استشارات للنساء
+    </a>
+    <ul>
+      <li><a href="#how">كيف نعمل</a></li>
+      <li><a href="#topics">المجالات</a></li>
+      <li><a href="#qa">أسئلة وأجوبة</a></li>
+      <li><a href="#experts">الخبيرات</a></li>
+      <li><a href="#faq">الأسئلة الشائعة</a></li>
+    </ul>
+    <a class="btn btn-primary" href="#ask">اطرحي سؤالك</a>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">مجانًا • بسرية تامة • دون ذكر اسمك</span>
+      <h1>مساحة آمنة<br>لكل سؤال يشغل بالك</h1>
+      <p class="lead">اكتبي سؤالك بحرية، وسيرد عليكِ فريق من الخبيرات والمختصين بإجابة مدروسة ومجانية. لا حاجة لاسمك أو رقم هاتفك أو بريدك.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#ask">اطرحي سؤالك الآن</a>
+        <a class="btn btn-ghost" href="#track">لديّ رمز متابعة</a>
+      </div>
+      <div class="pills">
+        <span><i></i>استشارات زوجية وأسرية</span>
+        <span><i></i>دعم نفسي</span>
+        <span><i></i>تربية وصحة وعمل</span>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 400 400" width="100%" height="100%">
+        <circle cx="200" cy="200" r="190" fill="#f6e3e8"/>
+        <circle cx="200" cy="200" r="140" fill="#fdf8f4"/>
+        <path d="M120 250c0-50 36-85 80-85s80 35 80 85v20H120z" fill="#6b3a63"/>
+        <circle cx="200" cy="130" r="38" fill="#4a2545"/>
+        <path d="M150 140c0-35 22-62 50-62s50 27 50 62c0 30-10 60-12 90h-76c-2-30-12-60-12-90z" fill="#4a2545" opacity=".9"/>
+        <ellipse cx="200" cy="138" rx="27" ry="31" fill="#e8bfa8"/>
+        <rect x="244" y="92" width="110" height="64" rx="18" fill="#fff" stroke="#e8dcd8" stroke-width="2"/>
+        <path d="M262 156l-8 20 26-20z" fill="#fff"/>
+        <circle cx="278" cy="124" r="6" fill="#c9748f"/><circle cx="299" cy="124" r="6" fill="#c9748f"/><circle cx="320" cy="124" r="6" fill="#c9748f"/>
+        <path d="M70 110c10-10 26-10 34 2" stroke="#c9748f" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M320 300c0-12 10-20 20-20s20 8 20 20-20 30-20 30-20-18-20-30z" fill="#c9748f"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>كيف نعمل؟</h2>
+      <p>ثلاث خطوات بسيطة، ودون أي تسجيل أو بيانات شخصية</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">١</div><h3>اكتبي سؤالك</h3><p>اختاري المجال واكتبي ما يقلقك بالتفصيل الذي يريحك. لا نطلب اسمك ولا أي وسيلة تواصل.</p></div>
+      <div class="step"><div class="num">٢</div><h3>احتفظي برمز المتابعة</h3><p>بعد الإرسال يظهر لكِ رمز خاص. هو الطريقة الوحيدة للوصول إلى إجابتك، فاحفظيه جيدًا.</p></div>
+      <div class="step"><div class="num">٣</div><h3>اقرئي الرد</h3><p>تراجع خبيرة مختصة سؤالك وتكتب ردها. أدخلي رمزك في قسم المتابعة لقراءة الإجابة.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TOPICS -->
+<section id="topics" class="bg-sand">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>في أي مجال تحتاجين المساعدة؟</h2>
+      <p>يمكنك أن تسألي عن أي شيء، وهذه أكثر المجالات التي نستقبل فيها الأسئلة</p>
+    </div>
+    <div class="cats" id="cats"></div>
+  </div>
+</section>
+
+<!-- ASK -->
+<section id="ask">
+  <div class="wrap ask-grid">
+    <div class="assure">
+      <h3>خصوصيتك أولًا</h3>
+      <ul>
+        <li><svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#c9748f"/><path d="M6 10l3 3 5-6" stroke="#fff" stroke-width="2" fill="none"/></svg><span>لا نطلب اسمًا ولا هاتفًا ولا بريدًا إلكترونيًا.</span></li>
+        <li><svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#c9748f"/><path d="M6 10l3 3 5-6" stroke="#fff" stroke-width="2" fill="none"/></svg><span>لا يرى سؤالك إلا فريق الخبيرات.</span></li>
+        <li><svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#c9748f"/><path d="M6 10l3 3 5-6" stroke="#fff" stroke-width="2" fill="none"/></svg><span>لا يُنشر أي سؤال في قسم «أسئلة وأجوبة» إلا إذا وافقتِ، وبعد حذف أي تفاصيل قد تدل عليكِ.</span></li>
+        <li><svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#c9748f"/><path d="M6 10l3 3 5-6" stroke="#fff" stroke-width="2" fill="none"/></svg><span>الاستشارة مجانية بالكامل.</span></li>
+      </ul>
+      <p style="margin:22px 0 0;font-size:.92rem;opacity:.85">نصيحة: لا تكتبي أسماء حقيقية أو عناوين أو أرقامًا في نص السؤال.</p>
+    </div>
+
+    <div class="card" id="ask-card">
+      <form id="ask-form" novalidate>
+        <div class="row2">
+          <div class="field">
+            <label class="f" for="cat">المجال</label>
+            <select id="cat" required></select>
+          </div>
+          <div class="field">
+            <label class="f" for="age">الفئة العمرية <span class="hint">(اختياري)</span></label>
+            <select id="age">
+              <option value="">أفضّل عدم الذكر</option>
+              <option>أقل من ٢٠</option><option>٢٠ – ٢٩</option><option>٣٠ – ٣٩</option><option>٤٠ – ٤٩</option><option>٥٠ فأكثر</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label class="f" for="question">سؤالك</label>
+          <textarea id="question" maxlength="3000" placeholder="اكتبي سؤالك هنا بالتفصيل الذي يريحك..." required></textarea>
+          <div class="counter"><span id="count">0</span> / 3000</div>
+        </div>
+        <label class="check"><input type="checkbox" id="allowPublic"> <span>أوافق على نشر سؤالي والرد عليه بشكل مجهول في قسم «أسئلة وأجوبة» لتستفيد منه نساء أخريات.</span></label>
+        <button class="btn btn-primary" type="submit" id="ask-btn" style="width:100%">إرسال السؤال بسرية</button>
+        <div class="msg" id="ask-msg" role="status"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- TRACK -->
+<section id="track" class="bg-sand">
+  <div class="wrap track">
+    <div class="sec-head">
+      <h2>متابعة سؤالك</h2>
+      <p>أدخلي رمز المتابعة الذي ظهر لكِ بعد إرسال السؤال</p>
+    </div>
+    <form id="track-form">
+      <label class="sr" for="code">رمز المتابعة</label>
+      <input type="text" id="code" placeholder="XXXX-XXXX" maxlength="9" autocomplete="off">
+      <button class="btn btn-primary" type="submit">عرض الرد</button>
+    </form>
+    <div class="result" id="track-result"></div>
+  </div>
+</section>
+
+<!-- Q&A -->
+<section id="qa">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>أسئلة وأجوبة</h2>
+      <p>أسئلة حقيقية وافقت صاحباتها على نشرها دون أي معلومات شخصية</p>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="qa-list" id="qa-list"><div class="empty">جارٍ التحميل...</div></div>
+  </div>
+</section>
+
+<!-- EXPERTS -->
+<section id="experts" class="bg-sand">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>من يجيب على أسئلتك؟</h2>
+      <p>فريق من المختصات والمختصين المتطوعين، كلٌّ في مجاله</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp"><div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4a2545" stroke-width="1.8"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg></div><h3>مستشارات أسريات</h3><p>العلاقات الزوجية وحل الخلافات</p></div>
+      <div class="exp"><div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4a2545" stroke-width="1.8"><circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/></svg></div><h3>أخصائيات نفسيات</h3><p>القلق والضغوط والدعم النفسي</p></div>
+      <div class="exp"><div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4a2545" stroke-width="1.8"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg></div><h3>مختصات صحيات</h3><p>صحة المرأة والحمل والأمومة</p></div>
+      <div class="exp"><div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4a2545" stroke-width="1.8"><path d="M4 20h16M6 20V9l6-5 6 5v11"/><path d="M10 20v-6h4v6"/></svg></div><h3>مستشارات قانونيات</h3><p>الحقوق والأحوال الشخصية</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head"><h2>الأسئلة الشائعة</h2></div>
+    <div class="faq">
+      <details><summary>هل الاستشارة مجانية فعلًا؟</summary><p>نعم، جميع الاستشارات مجانية بالكامل، ويقدمها فريق من المتطوعات والمتطوعين المختصين.</p></details>
+      <details><summary>هل يعرف أحد من أنا؟</summary><p>لا نطلب اسمك ولا أي وسيلة تواصل، ولا نعرض أي بيانات شخصية مع سؤالك. لذلك ننصحك أيضًا بعدم كتابة أسماء أو عناوين في نص السؤال.</p></details>
+      <details><summary>متى يصلني الرد؟</summary><p>نحاول الرد في أقرب وقت ممكن، وقد يستغرق ذلك بضعة أيام حسب عدد الأسئلة. ادخلي إلى قسم «متابعة سؤالك» برمزك من حين لآخر.</p></details>
+      <details><summary>فقدتُ رمز المتابعة، ماذا أفعل؟</summary><p>لأننا لا نعرف هويتك، لا يمكننا استرجاع الرمز. يمكنك إرسال سؤالك مرة أخرى، وإن كنتِ وافقتِ على النشر فقد تجدين الرد في قسم «أسئلة وأجوبة».</p></details>
+      <details><summary>هل تُغني الاستشارة عن الطبيبة أو المحامية؟</summary><p>استشاراتنا للتوجيه والدعم، ولا تُغني عن الفحص الطبي أو الاستشارة القانونية الرسمية عند الحاجة، وسننصحك بذلك عندما يلزم.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- SOS -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sos" role="note">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a2453f" stroke-width="2" style="flex:none"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg>
+      <div>
+        <h3>إذا كنتِ في خطر الآن</h3>
+        <p>هذه المنصة ليست خدمة طوارئ، وقد يتأخر الرد. إذا كنتِ أنتِ أو أطفالك في خطر مباشر، اتصلي فورًا برقم الطوارئ في بلدك أو توجهي إلى أقرب مكان آمن أو شخص تثقين به.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERT PANEL (only for team) -->
+<section id="expert">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>لوحة الخبيرات</h2>
+      <p>تظهر هذه اللوحة لفريق الخبيرات فقط</p>
+    </div>
+    <div class="card" id="login-box" style="max-width:440px;margin:0 auto">
+      <form id="login-form">
+        <div class="field"><label class="f" for="login-email">البريد الإلكتروني</label><input type="text" id="login-email" dir="ltr" autocomplete="username"></div>
+        <div class="field"><label class="f" for="login-pass">كلمة المرور</label><input type="password" id="login-pass" dir="ltr" autocomplete="current-password" style="width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--cream)"></div>
+        <button class="btn btn-primary" type="submit" style="width:100%">تسجيل الدخول</button>
+        <div class="msg" id="login-msg"></div>
+      </form>
+    </div>
+    <div id="team-area" style="display:none">
+    <p style="text-align:center;color:var(--muted)">مسجّلة باسم <span id="who" dir="ltr"></span> — <button class="chip" id="logout" type="button">خروج</button></p>
+    <div class="tabs">
+      <button class="chip on" data-tab="new">بانتظار الرد <span id="n-new"></span></button>
+      <button class="chip" data-tab="done">تم الرد <span id="n-done"></span></button>
+    </div>
+    <div id="panel-list"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <a class="brand" href="#">
+          <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#f6e3e8"/><path d="M20 29c-6-4-10-7.5-10-12a5 5 0 0 1 10-1.5A5 5 0 0 1 30 17c0 4.5-4 8-10 12z" fill="#4a2545"/></svg>
+          استشارات للنساء
+        </a>
+        <p style="max-width:380px">منصة مجانية تمنح كل امرأة مساحة آمنة لتسأل دون خوف أو حرج، ويجيبها مختصون بصدق واحترام.</p>
+      </div>
+      <div>
+        <strong style="color:#fff">روابط</strong><br>
+        <a href="#ask">اطرحي سؤالك</a><br>
+        <a href="#track">متابعة سؤالك</a><br>
+        <a href="#qa">أسئلة وأجوبة</a><br>
+        <a href="#faq">الأسئلة الشائعة</a>
+      </div>
+    </div>
+    <small>© <span id="yr"></span> استشارات للنساء — الاستشارات للتوجيه والدعم ولا تُغني عن الرعاية الطبية أو الاستشارة القانونية المتخصصة.</small>
+  </div>
+</footer>
+
+<script type="module">
+(function(){
+  const CATS = [
+    {k:"marital", t:"استشارات زوجية", d:"التواصل مع الزوج، الخلافات، الثقة، والقرارات المشتركة", p:'<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>'},
+    {k:"family", t:"الأسرة والتربية", d:"تربية الأبناء، العلاقة مع الأهل وأهل الزوج", p:'<circle cx="8" cy="8" r="3"/><circle cx="16" cy="9" r="2.5"/><path d="M3 20c0-3 2.5-5.5 5-5.5s5 2.5 5 5.5M13 20c0-2.5 1.5-4.5 3-4.5s4 2 4 4.5"/>'},
+    {k:"psych", t:"الدعم النفسي", d:"القلق، الحزن، الضغوط اليومية والثقة بالنفس", p:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1 1.2 2.2 1.8 3.5 1.8s2.5-.6 3.5-1.8M9 9.5h.01M15 9.5h.01"/>'},
+    {k:"health", t:"صحة المرأة", d:"الحمل والأمومة والصحة العامة والإنجابية", p:'<path d="M12 4v16M4 12h16"/>'},
+    {k:"legal", t:"الحقوق والقانون", d:"الأحوال الشخصية، الطلاق، الحضانة والميراث", p:'<path d="M12 4v16M5 8h14M7 8l-3 6h6zM17 8l-3 6h6z"/>'},
+    {k:"other", t:"أخرى", d:"العمل، الدراسة، الصداقة… أي سؤال آخر يشغلك", p:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17v.5"/>'}
+  ];
+  const catName = k => (CATS.find(c=>c.k===k)||{t:"أخرى"}).t;
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const toAr = n => String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+  const fmtDate = ts => { try{ return new Date(ts).toLocaleDateString("ar",{year:"numeric",month:"long",day:"numeric"}); }catch(e){ return ""; } };
+  $("#yr").textContent = toAr(new Date().getFullYear());
+
+  // categories
+  $("#cats").innerHTML = CATS.map(c=>`<button class="cat" data-k="${c.k}"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4a2545" stroke-width="1.8" stroke-linecap="round">${c.p}</svg></div><h3>${c.t}</h3><p>${c.d}</p></button>`).join("");
+  $("#cat").innerHTML = `<option value="">اختاري المجال</option>` + CATS.map(c=>`<option value="${c.k}">${c.t}</option>`).join("");
+  document.querySelectorAll(".cat").forEach(b=>b.addEventListener("click",()=>{ $("#cat").value=b.dataset.k; $("#ask").scrollIntoView({behavior:"smooth"}); setTimeout(()=>$("#question").focus(),500); }));
+  $("#question").addEventListener("input",e=>$("#count").textContent=toAr(e.target.value.length));
+
+  // helpers for db snapshots
+  const snapData = s => { if(!s) return null; if(typeof s.data==="function"){ if(s.exists===false || (typeof s.exists==="function" && !s.exists())) return null; return s.data(); } return s; };
+  const snapDocs = s => { const docs = (s && (s.docs || s)) || []; return Array.from(docs).map(d=>({id:d.id, ...(typeof d.data==="function"? d.data() : (d.data||d))})); };
+  const newCode = () => { const A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; const r=new Uint32Array(8); crypto.getRandomValues(r); const s=Array.from(r,x=>A[x%A.length]).join(""); return s.slice(0,4)+"-"+s.slice(4); };
+
+  function showMsg(el, text, kind){ el.className="msg show "+kind; el.textContent=text; }
+
+  // ============ FIREBASE ============
+  // ↓↓↓ Hier deine eigenen Firebase-Daten einfügen (aus der Firebase-Konsole) ↓↓↓
+  const firebaseConfig = {
+    apiKey: "HIER_EINFUEGEN",
+    authDomain: "HIER_EINFUEGEN",
+    projectId: "HIER_EINFUEGEN",
+    storageBucket: "HIER_EINFUEGEN",
+    messagingSenderId: "HIER_EINFUEGEN",
+    appId: "HIER_EINFUEGEN"
+  };
+  // ↑↑↑ ---------------------------------------------------------------- ↑↑↑
+
+  let fs=null, auth=null, F=null, A=null;
+  const dbReady = (async()=>{
+    try{
+      if(firebaseConfig.apiKey.startsWith("HIER")) throw new Error("no config");
+      const appM = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+      F = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+      A = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js");
+      const app = appM.initializeApp(firebaseConfig);
+      fs = F.getFirestore(app); auth = A.getAuth(app);
+    }catch(e){ console.warn("Firebase nicht verbunden:", e); fs=null; }
+    return fs;
+  })();
+
+  // ASK
+  $("#ask-form").addEventListener("submit", async e=>{
+    e.preventDefault();
+    const msg=$("#ask-msg"), btn=$("#ask-btn");
+    const cat=$("#cat").value, text=$("#question").value.trim();
+    if(!cat){ showMsg(msg,"من فضلك اختاري المجال.","err"); return; }
+    if(text.length<15){ showMsg(msg,"من فضلك اكتبي سؤالك بتفصيل أكثر قليلًا.","err"); return; }
+    btn.disabled=true; btn.textContent="جارٍ الإرسال...";
+    await dbReady;
+    if(!fs){ showMsg(msg,"تعذّر الاتصال بالخادم الآن. لم يُرسل سؤالك، حاولي مرة أخرى لاحقًا.","err"); btn.disabled=false; btn.textContent="إرسال السؤال بسرية"; return; }
+    const code=newCode();
+    try{
+      await F.setDoc(F.doc(fs,"questions",code), {
+        category:cat, age:$("#age").value||"", question:text,
+        allowPublic:$("#allowPublic").checked, status:"new", createdAt:Date.now()
+      });
+      $("#ask-card").innerHTML = `<div class="success">
+        <svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="#f6e3e8"/><path d="M20 33l8 8 16-18" stroke="#4a2545" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+        <h3 style="color:var(--plum);margin:10px 0 4px">وصل سؤالك بأمان</h3>
+        <p style="color:var(--muted);margin:0">هذا هو رمز المتابعة الخاص بك. احفظيه، فهو الطريقة الوحيدة لقراءة الرد:</p>
+        <div class="code-box"><span>${code}</span><button class="btn btn-ghost copy-btn" id="copy-code" type="button">نسخ</button></div>
+        <p style="color:var(--muted);font-size:.92rem">لن نتمكن من استرجاع هذا الرمز إن فقدتِه، لأننا لا نعرف هويتك.</p>
+        <a class="btn btn-ghost" href="#track">الذهاب إلى صفحة المتابعة</a>
+      </div>`;
+      $("#code").value=code;
+      $("#copy-code").addEventListener("click",async ev=>{ try{ await navigator.clipboard.writeText(code); ev.target.textContent="تم النسخ ✓"; }catch(_){ ev.target.textContent="انسخيه يدويًا"; } });
+    }catch(err){
+      console.error(err);
+      showMsg(msg,"لم يتم إرسال السؤال بسبب خطأ مؤقت. حاولي مرة أخرى من فضلك.","err");
+      btn.disabled=false; btn.textContent="إرسال السؤال بسرية";
+    }
+  });
+
+  // TRACK
+  $("#track-form").addEventListener("submit", async e=>{
+    e.preventDefault();
+    const out=$("#track-result");
+    let code=$("#code").value.trim().toUpperCase().replace(/\s/g,"");
+    if(/^[A-Z0-9]{8}$/.test(code)) code=code.slice(0,4)+"-"+code.slice(4);
+    $("#code").value=code;
+    if(!/^[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code)){ out.innerHTML=`<div class="msg show err">الرمز غير صحيح. يتكون من ٨ أحرف وأرقام، مثل AB12-CD34.</div>`; return; }
+    out.innerHTML=`<div class="msg show info">جارٍ البحث...</div>`;
+    await dbReady;
+    if(!fs){ out.innerHTML=`<div class="msg show err">تعذّر الاتصال بالخادم الآن، حاولي لاحقًا.</div>`; return; }
+    try{
+      const s = await F.getDoc(F.doc(fs,"answers",code));
+      const a = s.exists() ? s.data() : null;
+      if(a && a.answer){
+        out.innerHTML = `<article class="qa"><div class="meta"><span class="tag">${esc(catName(a.category))}</span><span>تم الرد في ${esc(fmtDate(a.answeredAt))}</span></div>
+          <p class="q">${esc(a.question)}</p><div class="a-label">رد الخبيرة</div><p class="a">${esc(a.answer)}</p></article>`;
+      } else {
+        out.innerHTML=`<div class="msg show info">لم يُنشر رد على هذا الرمز بعد. إن كنتِ أرسلتِ سؤالك مؤخرًا فهو قيد المراجعة، عودي لاحقًا من فضلك. 🤍</div>`;
+      }
+    }catch(err){ out.innerHTML=`<div class="msg show err">تعذّر جلب الرد الآن، حاولي لاحقًا.</div>`; }
+  });
+
+  // PUBLIC Q&A
+  let answers=[], filter="all";
+  function renderFilters(){
+    $("#filters").innerHTML = [`<button class="chip ${filter==="all"?"on":""}" data-f="all">الكل</button>`].concat(CATS.map(c=>`<button class="chip ${filter===c.k?"on":""}" data-f="${c.k}">${c.t}</button>`)).join("");
+    document.querySelectorAll("#filters .chip").forEach(b=>b.addEventListener("click",()=>{ filter=b.dataset.f; renderFilters(); renderQA(); }));
+  }
+  function renderQA(){
+    const list = answers.filter(a=>a.public && a.answer && (filter==="all"||a.category===filter)).sort((x,y)=>(y.answeredAt||0)-(x.answeredAt||0));
+    $("#qa-list").innerHTML = list.length ? list.map(a=>`<article class="qa"><div class="meta"><span class="tag">${esc(catName(a.category))}</span><span>${esc(fmtDate(a.answeredAt))}</span></div>
+      <p class="q">${esc(a.question)}</p><div class="a-label">رد الخبيرة</div><p class="a">${esc(a.answer)}</p></article>`).join("")
+      : `<div class="empty">لا توجد أسئلة منشورة في هذا المجال بعد. كوني أول من يسأل!</div>`;
+  }
+  renderFilters();
+
+  // EXPERT PANEL
+  let questions=[], tab="new";
+  function renderPanel(){
+    const nNew=questions.filter(q=>q.status!=="answered").length, nDone=questions.length-nNew;
+    $("#n-new").textContent="("+toAr(nNew)+")"; $("#n-done").textContent="("+toAr(nDone)+")";
+    const list=questions.filter(q=>tab==="new"? q.status!=="answered" : q.status==="answered").sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+    $("#panel-list").innerHTML = list.length ? list.map(q=>`<div class="panel-q" data-id="${esc(q.id)}">
+        <div class="meta" style="display:flex;gap:10px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);margin-bottom:6px">
+          <span class="tag">${esc(catName(q.category))}</span>
+          <span class="status ${q.status==="answered"?"done":"new"}">${q.status==="answered"?"تم الرد":"جديد"}</span>
+          <span>${esc(fmtDate(q.createdAt))}</span>${q.age?`<span>العمر: ${esc(q.age)}</span>`:""}
+          <span>${q.allowPublic?"وافقت على النشر":"لا تريد النشر"}</span><span style="direction:ltr">${esc(q.id)}</span>
+        </div>
+        <p class="q" style="white-space:pre-wrap;font-weight:700;margin:0">${esc(q.question)}</p>
+        <label class="sr" for="ans-${esc(q.id)}">الرد</label>
+        <textarea id="ans-${esc(q.id)}" placeholder="اكتبي ردك هنا...">${esc(q.answer||"")}</textarea>
+        ${q.allowPublic?`<label class="check" style="margin-bottom:12px"><input type="checkbox" class="pub" ${q.published!==false?"checked":""}> <span>انشر السؤال والرد في قسم «أسئلة وأجوبة» (احذفي أي تفاصيل شخصية من النص قبل النشر)</span></label>`:""}
+        <label class="sr" for="qedit-${esc(q.id)}">نص السؤال للنشر</label>
+        ${q.allowPublic?`<details style="margin-bottom:12px;padding:10px 16px"><summary style="font-size:.95rem">تعديل نص السؤال قبل النشر</summary><textarea id="qedit-${esc(q.id)}" class="qedit">${esc(q.publicQuestion||q.question)}</textarea></details>`:""}
+        <div class="panel-actions"><button class="btn btn-primary save" type="button">${q.status==="answered"?"تحديث الرد":"إرسال الرد"}</button><span class="hint saved"></span></div>
+      </div>`).join("") : `<div class="empty">لا توجد أسئلة هنا.</div>`;
+    document.querySelectorAll("#panel-list .save").forEach(b=>b.addEventListener("click",()=>saveAnswer(b.closest(".panel-q"))));
+  }
+  async function saveAnswer(box){
+    const id=box.dataset.id, q=questions.find(x=>x.id===id); if(!q) return;
+    const ans=box.querySelector("textarea[id^=ans-]").value.trim(); const note=box.querySelector(".saved"); const btn=box.querySelector(".save");
+    if(ans.length<5){ note.textContent="الرد قصير جدًا."; return; }
+    const pubBox=box.querySelector(".pub"); const pub = !!(q.allowPublic && pubBox && pubBox.checked);
+    const qe=box.querySelector(".qedit"); const pubQ = qe ? qe.value.trim()||q.question : q.question;
+    btn.disabled=true; note.textContent="جارٍ الحفظ...";
+    try{
+      const now=Date.now();
+      await F.setDoc(F.doc(fs,"answers",id), {category:q.category, question: pub? pubQ : q.question, answer:ans, public:pub, answeredAt:now});
+      await F.updateDoc(F.doc(fs,"questions",id), {answer:ans, status:"answered", published:pub, publicQuestion:pubQ, answeredAt:now});
+      note.textContent="تم الحفظ ✓";
+    }catch(err){ console.error(err); note.textContent="تعذّر الحفظ. تأكدي من صلاحياتك."; }
+    btn.disabled=false;
+  }
+  document.querySelectorAll("#expert .tabs .chip").forEach(b=>b.addEventListener("click",()=>{ tab=b.dataset.tab; document.querySelectorAll("#expert .tabs .chip").forEach(x=>x.classList.toggle("on",x===b)); renderPanel(); }));
+
+  // Team-Login: Seite mit #team am Ende der Adresse öffnen
+  function checkTeamHash(){ if(location.hash==="#team"){ $("#expert").classList.add("show"); } }
+  window.addEventListener("hashchange", checkTeamHash); checkTeamHash();
+
+  $("#login-form").addEventListener("submit", async e=>{
+    e.preventDefault(); const m=$("#login-msg");
+    await dbReady; if(!auth){ showMsg(m,"Firebase غير متصل.","err"); return; }
+    try{ await A.signInWithEmailAndPassword(auth, $("#login-email").value.trim(), $("#login-pass").value); m.className="msg"; }
+    catch(err){ showMsg(m,"البريد أو كلمة المرور غير صحيحة.","err"); }
+  });
+  $("#logout").addEventListener("click", async()=>{ try{ await A.signOut(auth); }catch(e){} });
+
+  // boot data
+  (async()=>{
+    const timer=setTimeout(()=>{ if(!answers.length) $("#qa-list").innerHTML=`<div class="empty">لا توجد أسئلة منشورة بعد.</div>`; },10000);
+    await dbReady;
+    if(!fs){ clearTimeout(timer); $("#qa-list").innerHTML=`<div class="empty">تعذّر تحميل الأسئلة المنشورة الآن.</div>`; return; }
+    F.onSnapshot(F.query(F.collection(fs,"answers"), F.where("public","==",true)),
+      s=>{ clearTimeout(timer); answers=s.docs.map(d=>({id:d.id,...d.data()})); renderQA(); },
+      err=>{ clearTimeout(timer); console.error(err); $("#qa-list").innerHTML=`<div class="empty">تعذّر تحميل الأسئلة المنشورة الآن.</div>`; });
+
+    let unsubQ=null;
+    A.onAuthStateChanged(auth, u=>{
+      if(unsubQ){ unsubQ(); unsubQ=null; }
+      if(u){
+        $("#expert").classList.add("show"); $("#login-box").style.display="none"; $("#team-area").style.display="block";
+        $("#who").textContent=u.email||"";
+        unsubQ = F.onSnapshot(F.collection(fs,"questions"),
+          s=>{ questions=s.docs.map(d=>({id:d.id,...d.data()})); renderPanel(); },
+          err=>{ console.error(err); $("#panel-list").innerHTML=`<div class="empty">ليس لديكِ صلاحية لرؤية الأسئلة. تأكدي أن بريدك مضاف في قواعد Firebase.</div>`; });
+      } else {
+        $("#login-box").style.display="block"; $("#team-area").style.display="none"; questions=[];
+      }
+    });
+  })();
+})();
+</script>
+</body>
+</html>
